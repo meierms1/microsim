@@ -396,6 +396,7 @@ int main(int argc, char * argv[]) {
       }
       if (taskid == MASTER) {
         fprintf(stdout, "Time=%le\n", t*deltat + STARTTIME);
+	fprintf(stdout, "TimeStep =%i\n", t);
         for (b=0; b<NUMPHASES; b++) {
           fprintf(stdout, "%*s, Max = %le, Min = %le, Relative_Change=%le\n", max_length, Phases[b], global_max_min.phi_max[b], global_max_min.phi_min[b], sqrt(global_max_min.rel_change_phi[b]));
         }

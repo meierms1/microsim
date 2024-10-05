@@ -1,0 +1,42 @@
+BOUNDARY_LEFT[PHI] = PERIODIC
+
+BOUNDARY_RIGHT[PHI] = PERIODIC
+
+BOUNDARY_FRONT[PHI] = PERIODIC
+
+BOUNDARY_BACK[PHI] = PERIODIC
+
+BOUNDARY_TOP[PHI] = FREE
+
+DIRICHLET and FREE boundary conditions have not yet been implemented. Please wait for next release. Will default to PERIODIC
+BOUNDARY_BOTTOM[PHI] = FREE
+
+DIRICHLET and FREE boundary conditions have not yet been implemented. Please wait for next release. Will default to PERIODIC
+BOUNDARY_LEFT[MU] = PERIODIC
+
+BOUNDARY_RIGHT[MU] = PERIODIC
+
+BOUNDARY_FRONT[MU] = PERIODIC
+
+BOUNDARY_BACK[MU] = PERIODIC
+
+BOUNDARY_TOP[MU] = FREE
+
+DIRICHLET and FREE boundary conditions have not yet been implemented. Please wait for next release. Will default to PERIODIC
+BOUNDARY_BOTTOM[MU] = FREE
+
+DIRICHLET and FREE boundary conditions have not yet been implemented. Please wait for next release. Will default to PERIODIC
+BOUNDARY_LEFT[T] = PERIODIC
+
+BOUNDARY_RIGHT[T] = PERIODIC
+
+BOUNDARY_FRONT[T] = PERIODIC
+
+BOUNDARY_BACK[T] = PERIODIC
+
+BOUNDARY_TOP[T] = FREE
+
+DIRICHLET and FREE boundary conditions have not yet been implemented. Please wait for next release. Will default to PERIODIC
+BOUNDARY_BOTTOM[T] = FREE
+
+DIRICHLET and FREE boundary conditions have not yet been implemented. Please wait for next release. Will default to PERIODIC

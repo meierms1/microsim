@@ -1,0 +1,123 @@
+MESH_X = 200
+
+MESH_Y = 200
+
+MESH_Z = 200
+
+DELTA_X = 2.500000e-10
+
+DELTA_Y = 2.500000e-10
+
+DELTA_Z = 2.500000e-10
+
+NUMPHASES = 2
+
+NUMCOMPONENTS = 2
+
+DIMENSION = 2
+
+NTIMESTEPS = 100000
+
+SAVET = 1000
+
+NSMOOTH = 20
+
+R = 8.314000e+00
+
+V = 1.000000e-05
+
+TEMPERATURE_SCALE = 0.000000e+00
+
+TEMPERATURE = 8.400000e+02
+
+Equilibrium_temperature = 8.700000e+02
+
+Filling_temperature = 8.400000e+02
+
+GAMMA = [0.000000e+00,1.000000e-02
+         1.000000e-02,0.000000e+00]
+
+dab = [0.000000e+00,1.000000e-02
+       1.000000e-02,0.000000e+00]
+
+Tau = [0.000000e+00,2.800000e-01
+       2.800000e-01,0.000000e+00]
+
+DIFFUSIVITY[alpha] = [0.000000e+00]
+
+DIFFUSIVITY[liquid] = [1.000000e-09]
+
+Slopes[Solidus,alpha] = [7.593780e+02]
+
+Slopes[Solidus,liquid] = [6.901240e-310]
+
+Slopes[Liquidus,alpha] = [2.932585e+02]
+
+Slopes[Liquidus,liquid] = [6.901240e-310]
+
+A[alpha] = [2.153274e+04]
+
+A[liquid] = [9.375623e+03]
+
+Rotation_matrix[alpha][liquid] = [1.000000e+00,0.000000e+00,0.000000e+00
+                                  0.000000e+00,1.000000e+00,0.000000e+00
+                                  0.000000e+00,0.000000e+00,1.000000e+00]
+
+Rotation_matrix[liquid][alpha] = [1.000000e+00,0.000000e+00,0.000000e+00
+                                  0.000000e+00,1.000000e+00,0.000000e+00
+                                  0.000000e+00,0.000000e+00,1.000000e+00]
+
+Inv_Rotation_matrix[alpha][liquid] = [1.000000e+00,0.000000e+00,0.000000e+00
+                                      0.000000e+00,1.000000e+00,0.000000e+00
+                                      0.000000e+00,0.000000e+00,1.000000e+00]
+
+Inv_Rotation_matrix[liquid][alpha] = [1.000000e+00,0.000000e+00,0.000000e+00
+                                      0.000000e+00,1.000000e+00,0.000000e+00
+                                      0.000000e+00,0.000000e+00,1.000000e+00]
+
+Function_F = 3
+
+Function_W = 1
+
+Function_anisotropy = 1
+
+Anisotropy_type = 4
+
+COMPONENTS = [Al,Zn]
+
+PHASES = [alpha,liquid]
+
+ceq[Solidus,alpha] = [9.260000e-01]
+
+ceq[Solidus,liquid] = [8.170000e-01]
+
+ceq[Liquidus,alpha] = [8.170000e-01]
+
+ceq[Liquidus,liquid] = [8.170000e-01]
+
+cfill[Liquidus,alpha] = [8.170000e-01]
+
+cfill[Liquidus,liquid] = [8.170000e-01]
+
+EIGEN_STRAIN[alpha].xx = 1.000000e-02
+EIGEN_STRAIN[alpha].yy = 1.000000e-02
+EIGEN_STRAIN[alpha].zz = 0.000000e+00
+EIGEN_STRAIN[alpha].yz = 0.000000e+00
+EIGEN_STRAIN[alpha].xz = 0.000000e+00
+EIGEN_STRAIN[alpha].xy = 0.000000e+00
+
+EIGEN_STRAIN[liquid].xx = 0.000000e+00
+EIGEN_STRAIN[liquid].yy = 0.000000e+00
+EIGEN_STRAIN[liquid].zz = 0.000000e+00
+EIGEN_STRAIN[liquid].yz = 0.000000e+00
+EIGEN_STRAIN[liquid].xz = 0.000000e+00
+EIGEN_STRAIN[liquid].xy = 0.000000e+00
+
+Stiffness_cubic[alpha].C11 = 2.700000e+11
+Stiffness_cubic[alpha].C12 = 1.875000e+11
+Stiffness_cubic[alpha].C44 = 1.250000e+11
+
+Stiffness_cubic[liquid].C11 = 2.700000e+11
+Stiffness_cubic[liquid].C12 = 1.875000e+11
+Stiffness_cubic[liquid].C44 = 1.250000e+11
+

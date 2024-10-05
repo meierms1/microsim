@@ -1,0 +1,6 @@
+*.vtk
+*.h5
+*.xmf
+*.png
+*.out
+*.bd

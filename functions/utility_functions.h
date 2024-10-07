@@ -1135,3 +1135,45 @@ void free_memory_fields(struct fields *ptr) {
     free(ptr->phia);
   }
 }
+
+void create_metadata_input(const char *input, const char *name){
+
+  char destination[100];
+  sprintf(destination, "DATA/%s/metadataInput.txt", name);
+
+    // Open source file
+    FILE *sourceFile = fopen(input, "rb");
+    // Open destination file
+    FILE *destFile = fopen(destination, "wb");
+    // Buffer to store data
+    char buffer[1024];
+    size_t bytesRead;
+    // Copy contents from source to destination
+    while ((bytesRead = fread(buffer, 1, sizeof(buffer), sourceFile)) > 0) {
+        fwrite(buffer, 1, bytesRead, destFile);
+    }
+    // Close files
+    fclose(sourceFile);
+    fclose(destFile);
+    printf("Metadata created successfully.\n");
+}
+void create_metadata_filling(const char *input, const char *name){
+
+  char destination[100];
+  sprintf(destination, "DATA/%s/metadataFilling.txt", name);
+    // Open source file
+    FILE *sourceFile = fopen(input, "rb");
+    // Open destination file
+    FILE *destFile = fopen(destination, "wb");
+    // Buffer to store data
+    char buffer[1024];
+    size_t bytesRead;
+    // Copy contents from source to destination
+    while ((bytesRead = fread(buffer, 1, sizeof(buffer), sourceFile)) > 0) {
+        fwrite(buffer, 1, bytesRead, destFile);
+    }
+    // Close files
+    fclose(sourceFile);
+    fclose(destFile);
+    printf("Filling Metadata created successfully.\n");
+}

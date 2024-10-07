@@ -73,7 +73,7 @@ void write_xdmf_xml(long t, char *argv[]){
      */
 	char fname_write[1000];
 // 	sprintf(fname_write, "DATA/%s_%ld_%ld.xmf", argv[2], nprocs, t);
-    sprintf(fname_write, "DATA/%s_%ld.xmf", argv[2], t);
+    sprintf(fname_write, "DATA/%s/%s_%ld.xmf", argv[2], argv[2], t);
     xmf = fopen(fname_write, "w");
 	
 	char fname_read[1000];

@@ -110,10 +110,14 @@ int main(int argc, char * argv[]) {
   }
   
   if(taskid==MASTER) {
-    mkdir("DATA",0777);
+    char *folder_name = argv[3];
+    char longname[100];
+    sprintf(longname, "DATA/%s/", argv[3]);
+    mkdir(longname,0777);
     if (!WRITEHDF5){
+     //strcat(longname, );
      for (n=0; n < numtasks; n++) {
-       sprintf(dirname,"DATA/Processor_%d",n);
+       sprintf(dirname,"DATA/%s/Processor_%d", folder_name, n);
        mkdir(dirname, 0777);
      }
     }
@@ -123,6 +127,8 @@ int main(int argc, char * argv[]) {
     if ((STARTTIME == 0) && (RESTART ==0)) {
       fill_domain(argv);
     }
+    create_metadata_input(argv[1], folder_name);
+    create_metadata_filling(argv[2], folder_name);
   }
  
   populate_table_names();

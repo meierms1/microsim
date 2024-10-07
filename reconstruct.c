@@ -134,7 +134,7 @@ int main (int argc, char * argv[]) {
   
   for (t=t_start; t<=t_end; t+=saveT) {
      for (n=0; n < numworkers; n++) {
-      sprintf(filename, "DATA/Processor_%ld/%s_%ld.vtk",n, argv[2],t);
+      sprintf(filename, "DATA/%s/Processor_%ld/%s_%ld.vtk",n, argv[2], argv[2],t);
       if (ASCII) {
         fp = fopen(filename, "r");
         fscanf(fp,"%ld", &workers_rows[X]);
@@ -250,13 +250,13 @@ int main (int argc, char * argv[]) {
     }
     
     if (ASCII) {
-      sprintf(filename, "DATA/%s_%ld.vtk", argv[2],t);
+      sprintf(filename, "DATA/%s/%s_%ld.vtk", argv[2], argv[2],t);
       fp = fopen(filename, "w");
       write_to_file_ascii(fp, buffer);
 //       printf("I have written the file: %ld\n", t);
       fclose(fp);
     } else {
-      sprintf(filename, "DATA/%s_%ld.vtk", argv[2],t);
+      sprintf(filename, "DATA/%s/%s_%ld.vtk", argv[2], argv[2],t);
       fp = fopen(filename, "wb");
       write_to_file_binary(fp, buffer);
       fclose(fp);

@@ -24,6 +24,7 @@ void reading_input_parameters(char *argv[]) {
   long index;
   long length;
   long phase;
+
   
   while(fgets(tempbuff,10000,fr)) {
 //   while(MPI_File_read(fr,    tempbuff,    1000,    MPI_CHAR,    &status)){   

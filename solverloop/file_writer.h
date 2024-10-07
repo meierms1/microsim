@@ -25,6 +25,7 @@ void write_cells_vtk_2D_mpibinary(FILE *fp, struct fields* gridinfo);
 void writetofile_mpi2D_hdf5(struct fields* gridinfo, char *argv[], long t);
 void write_cells_hdf5_2D_mpi(hid_t file_id, struct fields* gridinfo);
 
+
 void writetofile_serial2D(struct fields* gridinfo, char *argv[], long t) {
   long x,y,z;
   long gidy;
@@ -73,6 +74,7 @@ void writetofile_mpi2D_binary(struct fields* gridinfo, char *argv[], long t) {
   write_cells_vtk_2D_mpibinary(fp, gridinfo);
   fclose(fp);
 }
+/*
 void writetofile_mpi2D_hdf5(struct fields* gridinfo, char *argv[], long t) {
   hid_t file_id;
   hid_t plist_id;
@@ -82,6 +84,27 @@ void writetofile_mpi2D_hdf5(struct fields* gridinfo, char *argv[], long t) {
   //every processor creates a file collectively
 //   sprintf(filename_hdf5, "DATA/%s_%d_%ld.h5", argv[3], numtasks, t);
   sprintf(filename_hdf5, "DATA/%s_%ld.h5", argv[3], t);
+  /* Set up file access property list with parallel I/O access /
+  plist_id = H5Pcreate(H5P_FILE_ACCESS);
+  H5Pset_fapl_mpio(plist_id, MPI_COMM_WORLD, MPI_INFO_NULL);
+  
+  file_id = H5Fcreate(filename_hdf5, H5F_ACC_TRUNC, H5P_DEFAULT, plist_id);
+  H5Pclose(plist_id); // we'll use this plist_id again later 
+  
+  write_cells_hdf5_2D_mpi(file_id, gridinfo);
+  
+  status_h = H5Fclose(file_id);
+}
+*/
+void writetofile_mpi2D_hdf5(struct fields* gridinfo, char *argv[], long t) {
+  hid_t file_id;
+  hid_t plist_id;
+  
+  char filename_hdf5[1000];
+
+  //every processor creates a file collectively
+//   sprintf(filename_hdf5, "DATA/%s_%d_%ld.h5", argv[3], numtasks, t);
+  sprintf(filename_hdf5, "DATA/%s/%s_%ld.h5", argv[3], argv[3], t);
   /* Set up file access property list with parallel I/O access*/
   plist_id = H5Pcreate(H5P_FILE_ACCESS);
   H5Pset_fapl_mpio(plist_id, MPI_COMM_WORLD, MPI_INFO_NULL);
@@ -99,10 +122,10 @@ void readfromfile_mpi2D_hdf5(struct fields* gridinfo, char *argv[], long numwork
   hid_t plist_id;
   
   char filename_hdf5[1000];
-  
+
   //every processor creates a file collectively
 //   sprintf(filename_hdf5, "DATA/%s_%ld_%ld.h5", argv[3], numworkers, t);
-  sprintf(filename_hdf5, "DATA/%s_%ld.h5", argv[3], t);
+  sprintf(filename_hdf5, "DATA/%s/%s_%ld.h5", argv[3], argv[3], t);
   /* Set up file access property list with parallel I/O access*/
   plist_id = H5Pcreate(H5P_FILE_ACCESS);
   H5Pset_fapl_mpio(plist_id, MPI_COMM_WORLD, MPI_INFO_NULL);

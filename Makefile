@@ -27,7 +27,7 @@ DEPS += $(patsubst %,$(TDIR)/%,$(_tdb_DEPS))
 
 LIBS =-L $(LDIR) -lm -lgsl -lgslcblas 
 
-all : microsim_gp write_xdmf reconstruct 
+all : microsim_gp microsim_gp_debug write_xdmf reconstruct 
 
 
 # echo "Making microsim_gp solver (grand-potential based phase-field model)"
@@ -35,7 +35,12 @@ all : microsim_gp write_xdmf reconstruct
 microsim_gp : microsim_gp.o
 	$(CC) -o microsim_gp microsim_gp.o $(CFLAGS) $(LIBS) -Wall
 
-microsim_gp.o : $(DEPS)       
+microsim_gp.o : $(DEPS)   
+
+microsim_gp_debug : microsim_gp.o
+	$(CC) -o microsim_gp_debug microsim_gp.o $(CFLAGS) $(LIBS) -Wall
+
+microsim_gp.o : $(DEPS)  
 
 _HEADERS_XDMF_WRITER = global_vars.h functions.h matrix.h utility_functions.h reading_input_parameters.h
 

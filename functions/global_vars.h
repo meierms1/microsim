@@ -410,13 +410,6 @@ double *buffer_boundary_y_stress;
 double *buffer_boundary_z_stress;
 #define SIZE_STRUCT_FIELDS (2*NUMPHASES+2*(NUMCOMPONENTS-1)+1)
 
-// struct fields {
-//   double phia[2];
-//   double compi[1];
-//   double deltaphi[2];
-//   double temperature;
-// };
-
 struct fields *gridinfo;
 struct fields *gridinfo_w;
 struct fields *gridinfo_instance;
@@ -435,18 +428,10 @@ struct gradlayer {
  double ***dcdmu_phase;
  int interface;
  int bulk_phase;
-//  double ***strain;
-//  double **stiffness;
-//  double ***eigen_strain;
  struct symmetric_tensor strain[3];
  struct symmetric_tensor eigen_strain[3];
  struct Stiffness_cubic  stiffness_c[3];
 };
- //double strain[DIMENSION][DIMENSION][DIMENSION];
- //double stiffness[DIMENSION][3];			//2 to 3
- //double eigen_strain[DIMENSION][DIMENSION][DIMENSION];
-// struct symmetric_tensor *eigen_strain_phase;
-// struct Stiffness_cubic  *stiffness_phase;
 
 int ELASTICITY=0;
 int GRAIN_GROWTH=0;
@@ -479,32 +464,15 @@ struct gradlayer test;
 
 int FUNCTION_F = 1;
 
-// void(*function_F_dpsi[])(double *mu, double T, double *phi, long a)      = {function_f_01_dpsi};
-// void(*function_F_free_energy[])(double *c, double T, long a)             = {function_f_01_free_energy};
-// void(*function_F_Mu[])(double *c, double T, long a, long i)              = {function_f_01_free_energy};
-// void(*function_F_c_mu[])(double *mu, double T, long a, long i)           = {function_f_01_c_mu};
-// void(*function_F_dc_dmu[])(double *mu, double T, long a, long i, long j) = {function_f_01_dc_dmu};
-// void(*function_F_function_A[])(double T1, long i, long j, long a)        = {function_f_01_function_A};
-// void(*function_F_function_B[])(double T, long i, long a)                 = {function_f_01_function_B};
-// void(*function_F_function_C[])(double T, long a)                         = {function_f_01_function_C};
-// void(*function_F_compute_chemicalpotential[])(double T, long a)          = {function_f_01_compute_chemicalpotential};
-
-
 double (*free_energy)(double *c, double T, long a);
-// double (*Mu)(double *c, double T, long a, long i);
 void (*Mu)(double *c, double T, long a, double *Mu);
-// double (*c_mu)(double *mu, double T, long a, long i);
 void (*c_mu)(double *mu, double *c, double T, long a, double *c_guess);
-// double (*dc_dmu)(double *mu, double T, long a, long i, long j);
 void (*dc_dmu)(double *mu, double *phase_comp, double T, long a, double **dcdmu);
-// double (*dpsi)(double *mu, double T, double *phi, long a);
 double (*dpsi)(double *mu, double **phase_comp, double T, double *phi, long a);
 void (*function_A)(double T, double ***c);
 double (*function_B)(double T, long i, long a);
 double (*function_C)(double T, long a);
 void (*init_propertymatrices)(double T);
-// void (*compute_chemicalpotential)(struct fields* gridinfo);
-// double (*free_energy)(double *c, double T, long a);
 
 double (*dwdphi)(double *phi, double *divphi, struct gradlayer **gradient, long gidy, long a);
 double (*dwdphi_smooth)(double *phi, double *divphi, struct gradlayer **gradient, long gidy, long a);
@@ -514,12 +482,10 @@ double (*dAdphi_smooth)(double *phi, struct gradlayer **gradient, long gidy, lon
 double (*divdAdgradphi)(struct gradlayer **gradient, long index, long gidy, long a);
 double (*divdAdgradphi_smooth)(struct gradlayer **gradient, long index, long gidy, long a);
 
-
 void (*dAdq)(double *qab, double* dadq, long a, long b);
 double (*function_ac)(double *qab, long a, long b);
 
 void (*calculate_gradients)(long x, struct gradlayer **gradient);
-// void (*calculate_gradients_phasefield)(long x, struct gradlayer **gradient);
 void (*calculate_gradients_phasefield)(long x, struct gradlayer **gradient, int CALCULATE_COMPOSITION);
 void (*calculate_gradients_concentration)(long x, struct gradlayer **gradient);
 void (*calculate_fluxes_concentration)(long x, struct gradlayer **gradient);
@@ -540,10 +506,6 @@ void (*readfromfile_mpi_hdf5)(struct fields* gridinfo, char *argv[], long numwor
 void (*readfromfile_mpi)(struct fields* gridinfo, char *argv[], long t);
 void (*readfromfile_mpi_binary)(struct fields* gridinfo, char *argv[], long t);
 double (*df_elast)(struct gradlayer *gradient, struct symmetric_tensor sigma, double *phi, long a);
-
-// #define PHI 0
-// #define MU  1
-// #define T   2
 
 char *Scalars[] = {"PHI", "MU", "T", "U"}; 
 char dirname[1000];

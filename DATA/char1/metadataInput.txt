@@ -5,41 +5,41 @@ MESH_Y = 500;
 MESH_Z = 1;
 
 ##Discretization, space and time
-DELTA_X = 4e-11;
-DELTA_Y = 4e-11;
-DELTA_Z = 4e-11;
-DELTA_t = 1.5e-9;
+DELTA_X = 3.0;
+DELTA_Y = 3.0;
+DELTA_Z = 3.0;
+DELTA_t = 0.1;
 
 ##Number of phases and composition
 NUMPHASES = 2;
 NUMCOMPONENTS = 3;
 
 #Running and saving information
-NTIMESTEPS = 10;
+NTIMESTEPS = 100000;
 NSMOOTH = 10;
 SAVET = 1000;
 
 ## Component and Phase names
-COMPONENTS = {Al, Cu, Mo};
-PHASES = {alpha, beta};
+COMPONENTS = {Al, Mo, Ni};
+PHASES = {alpha, liquid};
 
 ##Material properties
-GAMMA = {0.01};
+GAMMA = {1.0};
 
 # Diffusivity = {Diagonal:0/1, phase, 11,22,33, 12, 13, 23...};
-DIFFUSIVITY = {1, 0, 1,1.0e-13, 1.0e-13};
-DIFFUSIVITY = {1, 1, 10,1.0e-13, 1.0e-13};
+DIFFUSIVITY = {1, 0, 1, 1};
+DIFFUSIVITY = {1, 1, 1, 1};
 
 ##Gas constant and molar volume
 R = 1.0;
 V = 1.0;
 
 ##Elasticity related parameters
-EIGEN_STRAIN = {0, 0.01};
-EIGEN_STRAIN = {1, 0.01};
+EIGEN_STRAIN = {0, 0.01, 0.01};
+EIGEN_STRAIN = {1, 0.01, 0.01};
 
-VOIGT_ISOTROPIC = {0, 270};
-VOIGT_ISOTROPIC = {1, 187.5};
+VOIGT_ISOTROPIC = {0, 270, 187.5};
+VOIGT_ISOTROPIC = {1, 270, 187.5};
 
 ##Boundary conditions
 #0: Free, 1: Neumann, 2: Dirichlet, 3: Periodic, 4: Complex
@@ -57,9 +57,9 @@ BOUNDARY_VALUE = {T, 0, 0, 0, 0, 0, 0};
 
 ##Type of simulation
 ISOTHERMAL = 1;
-BINARY = 1;
-TERNARY = 0;
-DILUTE = 0;
+#BINARY = 1;
+TERNARY = 1;
+#DILUTE = 0;
 T = 0.97;
 
 ##FILEWRITING and OUTPUTTING TO SCREEN
@@ -68,15 +68,15 @@ WRITEHDF5 = 1;
 TRACK_PROGRESS = 10;
 
 ##Model-specific parameters: Grand-potential model
-epsilon = 16e-11;
+epsilon = 8.0;
 tau = 1.31;
-Tau = {0.2};
+Tau = {0.837};
 
 ##Anisotropy functions
 ##Anisotropy mode, FUNCTION_ANISOTROPY=0 is isotropic
 Function_anisotropy = 0;
 Anisotropy_type = 4; 
-dab = {0.11};
+dab = {0.01};
 
 #Rotation_matrix = {0, 1, Euler_x(ang), Euler_y(ang), Euler_z(ang)};
 Rotation_matrix = {0, 1, 0, 10, 0};
@@ -103,20 +103,33 @@ Tempgrady = {0.96, 0.06, 800.0, 0, 0.016};
 
 ##Function_F
 Function_F = 1;
-A = {0, 1, 1, 1, 1};
-A = {1, 1, 1, 1, 1};
-A = {1, 0, 1, 1, 1};
-A = {0, 0, 1, 1, 1};
+A = {0, 1, 1};
+A = {1, 1, 1};
 
-ceq = {0, 0, 0.172581, 0.172581, 0.172581};
-ceq = {0, 1, 0.0684597, 0.172581, 0.172581};
-ceq = {1, 1, 0.0684597, 0.172581, 0.172581};
-ceq = {1, 0, 0.0684597, 0.172581, 0.172581};
-cfill = {0, 0, 0.172581, 0.172581, 0.172581};
-cfill = {0, 1, 0.0684597, 0.172581, 0.172581};
-cfill = {1, 1, 0.0684597, 0.172581, 0.172581};
-cfill = {1, 0, 0.0684597, 0.172581, 0.172581};
-slopes = {0, 1, 0.45, 0.45, 0.45};
-slopes = {1, 1, 0, 0.45, 0.45};
-slopes = {0, 0, 0.45, 0.45, 0.45};
-slopes = {1, 0, 0, 0.45, 0.45};
+ceq = {0, 0, 0.172581, 0.00333402};
+ceq = {0, 1, 0.0684597, 0.00114417};
+ceq = {1, 1, 0.0684597	0.00114417};
+ceq = {1, 0, 0.0684597	0.00114417};
+cfill = {0, 0, 0.172581, 0.00333402};
+cfill = {0, 1, 0.0684597, 0.00114417};
+cfill = {1, 1, 0.0684597, 0.00114417};
+cfill = {1, 0, 0.0684597, 0.00114417};
+slopes = {0, 1, 0.45, 0.0};
+
+#A = {0, 1, 1, 1, 1};
+#A = {1, 1, 1, 1, 1};
+
+#ceq = {0, 0, 0.70691, 0.146545};
+#ceq = {1, 1, 0.33333, 0.33333};
+#ceq = {0, 1, 0.33333, 0.33333};
+#ceq = {1, 0, 0.33333, 0.33333}; 
+
+#cfill = {0, 0, 0.70691, 0.146545};  
+#cfill = {1, 1, 0.33333, 0.33333};  
+#cfill = {0, 1, 0.33333, 0.33333}; 
+#cfill = {1, 0, 0.33333, 0.33333}; 
+
+#slopes = {0, 1, 0.45, 0.0};
+#slopes = {1, 1, 0.0, 0.45}; 
+#slopes = {1, 0, -0.45, -0.45};
+#slopes = {0, 1, -0.45, -0.45}; 

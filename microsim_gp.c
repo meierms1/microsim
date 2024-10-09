@@ -31,7 +31,6 @@
 #include "functions/functionW_02.h"
 #include "functions/function_A_00.h"
 #include "functions/function_A_01.h"
-// #include "functions/anisotropy_01.h"
 #include "functions/functionTau.h"
 #include "functions/functionD.h"
 #include "functions/filling.h"
@@ -55,12 +54,9 @@
 #include "solverloop/solverloop.h"
 #include "solverloop/file_writer.h"
 #include "solverloop/file_writer_3D.h"
-// #include "solverloop/mpiinfo_xy.h"
 #include "solverloop/mpiinfo_xyz.h"
 #include "solverloop/boundary_mpi.h"
 #include "solverloop/initialize_functions_solverloop.h"
-
-// void writetofile_worker();
 
 MPI_Request request;
 int main(int argc, char * argv[]) {
@@ -140,18 +136,9 @@ int main(int argc, char * argv[]) {
       stiffness_phase_n[b].C44 = stiffness_phase[b].C44/stiffness_phase[NUMPHASES-1].C44;
     }
   }
-  
-//   if (DIMENSION == 2) {
-//     Mpiinfo(taskid);
-//   } else {
+
   Mpiinfo(taskid);
-  
- 
-//   }
-//   exit(0);
-//   if (FUNCTION_F == 2) {
-  
-  
+
   if ((FUNCTION_F != 5) && (!GRAIN_GROWTH)) {
     Calculate_Tau();
   } else {
@@ -166,44 +153,10 @@ int main(int argc, char * argv[]) {
         }
       }
     }
-//     if (GRAIN_GROWTH) {
-//       
-//     }
     printf("tau[0][NUMPHASES-1]=%le\n",tau_ab[0][NUMPHASES-1]);
-//     exit(0);
   }
 
-//   }
-  
-  //Checking tdb functions
-  
-//   if (taskid == MASTER) {
-//     double c_x;
-//     double c[NUMCOMPONENTS-1];
-//     double c_calc[NUMCOMPONENTS-1];
-//     double mu[NUMCOMPONENTS-1];
-//     double dpsi;    
-//     char filename[1000];
-//     double fe;
-//     FILE *fp_check;
-//     for (a=0; a<NUMPHASES; a++) {
-//       sprintf(filename, "Thermodynamic_functions_%ld.dat", a);
-//       fp_check = fopen(filename, "w");
-//       for(c_x=0.01; c_x < 0.99;) {
-//         c[0] = c_x;
-//         Mu(c, T, a, mu);
-//         dc_dmu(mu, c, T, a, dcdmu);
-//         fe = free_energy(c, T, a);
-//         dpsi = fe - mu[0]*c[0];
-//         c_mu(mu, c, T, a, ceq[a][a]);
-//         fprintf(fp_check, "%le %le %le %le %le %le\n", c_x, mu[0], dcdmu[0][0], fe,  dpsi, c_calc[0]);
-//         c_x += 0.05;
-//       }
-//       fclose(fp_check);
-//     }
-//   }
-  
-  
+    
   if ((STARTTIME !=0) || (RESTART !=0)) {
     if (WRITEHDF5) {
       readfromfile_mpi_hdf5(gridinfo_w, argv, numworkers, STARTTIME);
@@ -261,10 +214,6 @@ int main(int argc, char * argv[]) {
     writetofile_mpi_hdf5(gridinfo_w, argv, 0 + STARTTIME);
   }
   
-//   printf("I am coming here\n");
-//   exit(0);
-//   writetofile_worker();
-
 //   Preconditioning
   for(t=1; t<nsmooth; t++) {
     smooth(workers_mpi.start, workers_mpi.end);
@@ -277,8 +226,7 @@ int main(int argc, char * argv[]) {
       mpiexchange_front_back(taskid);
     }
   }
-//   printf("Finished smoothing\n");
-//   exit(0);
+
   
   if (!WRITEHDF5) {
     if ((ASCII == 0)) {
@@ -289,8 +237,6 @@ int main(int argc, char * argv[]) {
   } else {
     writetofile_mpi_hdf5(gridinfo_w, argv, 0 + STARTTIME);
   }
-  printf("Finished smoothing\n");
-//   exit(0);
 
   
   for(t=1;t<=ntimesteps;t++) {
@@ -334,17 +280,6 @@ int main(int argc, char * argv[]) {
 		        apply_boundary_conditions_stress(taskid);
          }
 		     
-// 		     if ((iter%100)==0) {
-//            error = 0.0;
-// 		       for(x=workers_mpi.start[X]; x<=workers_mpi.end[X]; x++) {
-// 		         compute_error(x, &error);
-// 		       }
-// 		       printf("error=%le\n", error);
-// 		       MPI_Reduce(&error,  &global_error,   1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-// 		       if (fabs(global_error) < tolerance) {
-// 		        break;
-// 		       }
-//          }
       }
     }
   
@@ -358,9 +293,7 @@ int main(int argc, char * argv[]) {
         }
         if (shift_ON) {
           apply_shiftY(gridinfo_w, INTERFACE_POS_GLOBAL); 
-//           if (taskid == MASTER) {
           shift_OFFSET += (INTERFACE_POS_GLOBAL - shiftj);
-//           }
           mpiexchange_top_bottom(taskid);
         }
       }
@@ -388,7 +321,6 @@ int main(int argc, char * argv[]) {
         }
       }
     }
-    //printf("Iteration=%d\n",t);
     if (t%time_output == 0) {
       for (b=0; b<NUMPHASES; b++) {
         MPI_Reduce(&workers_max_min.phi_max[b],        &global_max_min.phi_max[b],         1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
@@ -402,7 +334,7 @@ int main(int argc, char * argv[]) {
       }
       if (taskid == MASTER) {
         fprintf(stdout, "Time=%le\n", t*deltat + STARTTIME);
-	fprintf(stdout, "TimeStep =%i\n", t);
+	fprintf(stdout, "TimeStep=%i\n", t);
         for (b=0; b<NUMPHASES; b++) {
           fprintf(stdout, "%*s, Max = %le, Min = %le, Relative_Change=%le\n", max_length, Phases[b], global_max_min.phi_max[b], global_max_min.phi_min[b], sqrt(global_max_min.rel_change_phi[b]));
         }
@@ -414,7 +346,6 @@ int main(int argc, char * argv[]) {
     }
   }
   free_variables();
-  
   
   if (taskid == MASTER) {
     index_count = layer_size*rows_x;
@@ -441,29 +372,3 @@ int main(int argc, char * argv[]) {
   }
   MPI_Finalize();
 }
-
-// void writetofile_worker() {
-//   FILE *fp;
-//   long index;
-//   long x,y;
-//   char name[100];
-//   long start_x;
-//   long start_y;
-//   sprintf(name,"Worker_%d.dat",taskid);
-//   fp = fopen(name,"w");
-//   
-//   fprintf(fp,"%ld\n",workers_mpi.rows[X]);
-//   fprintf(fp,"%ld\n",workers_mpi.rows[Y]);
-//   for(x=0;x < workers_mpi.rows[X]; x++) {
-//     for(y=0;y < workers_mpi.rows[Y]; y++) {
-//       index = (x + workers_mpi.offset_x)*workers_mpi.layer_size + (y + workers_mpi.offset_y);
-//       fprintf(fp,"%ld %ld %le\n",x + workers_mpi.offset[X],y + workers_mpi.offset[Y], gridinfo_w[index].phia[0]);
-//     }
-//     fprintf(fp,"\n");
-//   }
-//   fprintf(fp,"\n");
-//   fclose(fp);
-// }
-
-
-

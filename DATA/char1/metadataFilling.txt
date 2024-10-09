@@ -1,5 +1,4 @@
 #FILLCYLINDER = {phase, x_centre, y_centre, z_start, z_end, radius}
-FILLCUBE = {3, 0, 120, 0, 120, 0, 1};
-FILLCYLINDER = {0, 60, 60, 0, 0, 10};
+FILLCYLINDER = {0, 60, 0, 0, 0, 40};
 #FILLCYLINDER = {1, 60, 0, 0, 0, 20};
 #FILLCYLINDER = {2, 100, 0, 0, 0, 20};

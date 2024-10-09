@@ -17,7 +17,7 @@
 #include "functions/global_vars.h"
 #include "functions/functions.h"
 #include "functions/matrix.h"
-#include "functions/utility_functions.h"
+#include "functions/utility_functions_debug.h"
 #include "functions/functionH.h"
 #include "functions/functionF_01.h"
 #include "functions/functionF_02.h"
@@ -32,10 +32,10 @@
 #include "functions/function_A_00.h"
 #include "functions/function_A_01.h"
 // #include "functions/anisotropy_01.h"
-#include "functions/functionTau.h"
+#include "functions/functionTau_debug.h"
 #include "functions/functionD.h"
 #include "functions/filling.h"
-#include "functions/reading_input_parameters.h"
+#include "functions/reading_input_parameters_debug.h"
 #include "functions/read_boundary_conditions.h"
 #include "functions/print_input_parameters.h"
 #include "functions/print_boundary_conditions.h"
@@ -69,9 +69,9 @@ int main(int argc, char * argv[]) {
   MPI_Init(&argc,&argv);
   MPI_Comm_size(MPI_COMM_WORLD,&numtasks);
   MPI_Comm_rank(MPI_COMM_WORLD,&taskid);
-  printf("Phase 1 - Compleate");
+  printf("Phase 1 - Complete\n");
 
-  printf("Phase 2 - Initializing pase of inputs and boundaries\n");
+  printf("Phase 2 - Initializing parse of inputs and boundaries\n");
   reading_input_parameters(argv);
   printf("Phase 2 - Finished reading input parameters\n");
   initialize_variables();
@@ -92,7 +92,7 @@ int main(int argc, char * argv[]) {
     }
   }
 
-  printf("Phase 2 - Compleate\n");
+  printf("Phase 2 - Complete\n");
 
 
   Build_derived_type(gridinfo_instance, &MPI_gridinfo);
@@ -107,7 +107,7 @@ int main(int argc, char * argv[]) {
     if(numtasks != numworkers_x*numworkers_y) {
       fprintf(stdin,"The domain decomposition does not correspond to the number of spawned tasks!!\n: number of processes=numworkers_x*numworkers_y");
       exit(0);
-    } else {printf("Num workers ok");}
+    } else {printf("Num workers ok\n");}
   } else {
     numworkers_x = atol(argv[4]);
     numworkers_y = atol(argv[5]);
@@ -154,18 +154,11 @@ int main(int argc, char * argv[]) {
       stiffness_phase_n[b].C44 = stiffness_phase[b].C44/stiffness_phase[NUMPHASES-1].C44;
     }
   }
-  
-//   if (DIMENSION == 2) {
-//     Mpiinfo(taskid);
-//   } else {
+
   Mpiinfo(taskid);
   printf("Phase 3 - MpiInfo processed\n");
-  printf("Phase 3 - Compleate\n");
- 
-//   }
-//   exit(0);
-//   if (FUNCTION_F == 2) {
-  
+  printf("Phase 3 - Complete\n");
+
   printf("Phase 4 - Compute Tau\n");
   if ((FUNCTION_F != 5) && (!GRAIN_GROWTH)) {
     Calculate_Tau();
@@ -181,43 +174,11 @@ int main(int argc, char * argv[]) {
         }
       }
     }
-//     if (GRAIN_GROWTH) {
-//       
-//     }
     printf("tau[0][NUMPHASES-1]=%le\n",tau_ab[0][NUMPHASES-1]);
-//     exit(0);
-  }
-  printf("Phase 4 - Compleate\n");
 
-//   }
-  
-  //Checking tdb functions
-  
-//   if (taskid == MASTER) {
-//     double c_x;
-//     double c[NUMCOMPONENTS-1];
-//     double c_calc[NUMCOMPONENTS-1];
-//     double mu[NUMCOMPONENTS-1];
-//     double dpsi;    
-//     char filename[1000];
-//     double fe;
-//     FILE *fp_check;
-//     for (a=0; a<NUMPHASES; a++) {
-//       sprintf(filename, "Thermodynamic_functions_%ld.dat", a);
-//       fp_check = fopen(filename, "w");
-//       for(c_x=0.01; c_x < 0.99;) {
-//         c[0] = c_x;
-//         Mu(c, T, a, mu);
-//         dc_dmu(mu, c, T, a, dcdmu);
-//         fe = free_energy(c, T, a);
-//         dpsi = fe - mu[0]*c[0];
-//         c_mu(mu, c, T, a, ceq[a][a]);
-//         fprintf(fp_check, "%le %le %le %le %le %le\n", c_x, mu[0], dcdmu[0][0], fe,  dpsi, c_calc[0]);
-//         c_x += 0.05;
-//       }
-//       fclose(fp_check);
-//     }
-//   }
+  }
+  printf("Phase 4 - Complete\n");
+
   
   
   if ((STARTTIME !=0) || (RESTART !=0)) {
@@ -268,7 +229,7 @@ int main(int argc, char * argv[]) {
     GRADIENT    = (temperature_gradientY.DeltaT)*deltay/(temperature_gradientY.Distance);
     temp_bottom = temperature_gradientY.base_temp - BASE_POS*GRADIENT + (workers_mpi.offset[Y]-workers_mpi.offset_y)*GRADIENT;
     apply_temperature_gradientY(gridinfo_w, shift_OFFSET, 0);
-    printf("Phase 5 -  Tempgrady Compleated\n");
+    printf("Phase 5 -  Tempgrady Completed\n");
   }
    
   
@@ -282,10 +243,6 @@ int main(int argc, char * argv[]) {
     writetofile_mpi_hdf5(gridinfo_w, argv, 0 + STARTTIME);
   }
   printf("Phase 5 -  write to file initiated\n");
-  
-//   printf("I am coming here\n");
-//   exit(0);
-//   writetofile_worker();
 
 //   Preconditioning
 
@@ -313,7 +270,7 @@ printf("Phase 6 -  finished smooth loop\n");
     writetofile_mpi_hdf5(gridinfo_w, argv, 0 + STARTTIME);
   }
   printf("Finished smoothing\n");
-  printf("Phase 6 - Compleate\n");
+  printf("Phase 6 - Complete\n");
 
   printf("Phase 7 - Evolution loop\n");
   for(t=1;t<=ntimesteps;t++) {
@@ -406,7 +363,6 @@ printf("Phase 6 -  finished smooth loop\n");
       }
       printf("Phase 7 - Finished dumping data \n");
     }
-    //printf("Iteration=%d\n",t);
     if (t%time_output == 0) {
       for (b=0; b<NUMPHASES; b++) {
         MPI_Reduce(&workers_max_min.phi_max[b],        &global_max_min.phi_max[b],         1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
@@ -420,7 +376,7 @@ printf("Phase 6 -  finished smooth loop\n");
       }
       if (taskid == MASTER) {
         fprintf(stdout, "Time=%le\n", t*deltat + STARTTIME);
-	      fprintf(stdout, "TimeStep =%i\n", t);
+	      fprintf(stdout, "TimeStep=%i\n", t);
         for (b=0; b<NUMPHASES; b++) {
           fprintf(stdout, "%*s, Max = %le, Min = %le, Relative_Change=%le\n", max_length, Phases[b], global_max_min.phi_max[b], global_max_min.phi_min[b], sqrt(global_max_min.rel_change_phi[b]));
         }
@@ -431,7 +387,7 @@ printf("Phase 6 -  finished smooth loop\n");
       }
     }
   }
-  printf("Phase 7 - Compleated evolution ");
+  printf("Phase 7 - Completed evolution ");
   free_variables();
   
   

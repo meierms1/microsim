@@ -123,83 +123,11 @@ double function_F_01_function_C(double T, long a) {
   }
   return sum_c;
 }
-// void function_F_01_compute_chemicalpotential(struct fields* gridinfo) {
-//   long x, y;
-//   long gidy;
-//   double c[NUMCOMPONENTS]; 
-//   long b, k, l;
-//   long a;
-//   long bulk_phase;
-//   double **dcdmu, **inv_dcdmu, *chempot, *sum;
-//     
-//   dcdmu     = MallocM((NUMCOMPONENTS-1),(NUMCOMPONENTS-1));
-//   inv_dcdmu = MallocM(NUMCOMPONENTS-1,NUMCOMPONENTS-1);
-//   chempot   = MallocV(NUMCOMPONENTS-1);
-//   sum       = MallocV(NUMCOMPONENTS-1);
-//   
-//   for(x=0;x<=(MESH_X-1);x++) {
-//     for (y=0; y<=(MESH_Y-1); y++) {
-//       gidy = x*MESH_Y + y;
-//       for (k=0; k < NUMCOMPONENTS-1; k++) {
-//         sum[k] = 0.0;
-//         c[k]   = gridinfo[gidy].compi[k];
-//         for (l=0; l < NUMCOMPONENTS-1; l++) {
-//           dcdmu[k][l] = 0.0;
-//         }
-//       }
-//       interface = 1;
-//       for (a=0; a < NUMPHASES; a++) {
-//         if (gridinfo[gidy].phia[a] == 1.0) {
-//           bulk_phase=a;
-//           interface = 0;
-//           break;
-//         }
-//       }
-//       if (interface) {
-//         for (k=0; k < NUMCOMPONENTS-1; k++) {
-//           sum[k] = 0.0;
-//           for (l=0; l < NUMCOMPONENTS-1; l++) {
-//             for (a=0; a < NUMPHASES; a++) {
-//               sum[k] += cmu[a][k][l]*B[a][l]*hphi(gridinfo[gidy].phia, a);
-//             }
-//           }
-//           sum[k] += c[k];
-//         }
-//         for (k=0; k < NUMCOMPONENTS-1; k++) {
-//           for (l=0; l < NUMCOMPONENTS-1; l++) {
-//             for (a=0; a < NUMPHASES; a++) {
-//               dc_dmu(double *mu, double *phase_comp, double T, long a, double **dcdmu)
-//               dcdmu[k][l] += dc_dmu(c, T, a, k, l)*hphi(gridinfo[gidy].phia, a);
-//             }
-//           }
-//         }
-//         matinvnew(dcdmu,inv_dcdmu,NUMCOMPONENTS-1);
-//         multiply(inv_dcdmu,sum,gridinfo[gidy].compi,NUMCOMPONENTS-1);
-//       } else {
-//         for (k=0; k < NUMCOMPONENTS-1; k++) {
-//          gridinfo[gidy].compi[k] = Mu(c, T, bulk_phase, k);
-//         }
-//       }
-//     }
-//   }
-//   FreeM(dcdmu,NUMCOMPONENTS-1);
-//   FreeM(inv_dcdmu,NUMCOMPONENTS-1);
-//   free(chempot);
-//   free(sum);
-// }
+
 
 void function_F_01_init_propertymatrices(double T) {
   //Initialize property matrices
   long a, b, i, j, k;
-    
-//   for (a=0; a < NUMPHASES; a++) {
-//     for (i=0; i < NUMCOMPONENTS-1; i++) {
-//       B[a][i] = function_B(T, i, a);
-//     }
-//     C[a] = function_C(T,a);
-//   }  
-// #ifndef PHASE_DIAGRAM_PROP
-// #define PHASE_DIAGRAM_PROP
   for (a=0;a<NUMPHASES;a++) {
     for (i=0;i<NUMCOMPONENTS-1;i++) {
       for (j=0;j<NUMCOMPONENTS-1;j++) {

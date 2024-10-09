@@ -82,17 +82,34 @@ long file_exists(const char *fname) {
     return 0;
 }
 void populate_matrix(double **Mat, char *tmpstr, long NUMPHASES) {
+  printf("\nEntered Populate Matrix");
   char **tmp;
   char *str1, *str2, *token;
   char *saveptr1, *saveptr2;
   
   int i,j,k;
+
+  int val = 1; 
+  int s = 0;
+
+  while (tmpstr[s] != '\0') {
+    if (tmpstr[s] == ',') {
+        val++;
+    }
+    s++;
+  }
+  if (NUMPHASES*NUMPHASES != val ){
+    printf("\nPopulateMatrix size error for %s variable \n", tmpstr);
+    printf("Expected size %li but found %i \n", NUMPHASES * NUMPHASES, val);
+    //exit(0);
+  }
  
   tmp = (char**)malloc(sizeof(char*)*NUMPHASES*(NUMPHASES-1)*0.5);
   
   for (i = 0; i < NUMPHASES*(NUMPHASES-1)*0.5; ++i) {
     tmp[i] = (char*)malloc(sizeof(char)*10);
   }
+
   for (i = 0, str1 = tmpstr; ; i++, str1 = NULL) {
     token = strtok_r(str1, "{,}", &saveptr1);
     if (token == NULL)
@@ -109,6 +126,16 @@ void populate_matrix(double **Mat, char *tmpstr, long NUMPHASES) {
       k++;
     }
   }
+  printf("Matrix filled");
+
+  printf("\n######################\n");
+  for(i=0; i < NUMPHASES; i++) {
+    for (j=0; j < NUMPHASES; j++) {
+      printf("Mat %ii %ij = %f\n", i, j, Mat[i][j]);
+    }
+  }
+  printf("\n######################\n");
+
   
   for (i = 0; i < NUMPHASES*(NUMPHASES-1)*0.5; ++i) {
     free(tmp[i]);

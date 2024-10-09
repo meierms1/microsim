@@ -1,0 +1,4 @@
+#FILLCYLINDER = {phase, x_centre, y_centre, z_start, z_end, radius}
+FILLCYLINDER = {0, 20, 0, 0, 0, 20};
+FILLCYLINDER = {1, 60, 0, 0, 0, 20};
+FILLCYLINDER = {2, 100, 0, 0, 0, 20};

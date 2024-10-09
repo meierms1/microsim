@@ -37,10 +37,10 @@ microsim_gp : microsim_gp.o
 
 microsim_gp.o : $(DEPS)   
 
-microsim_gp_debug : microsim_gp.o
-	$(CC) -o microsim_gp_debug microsim_gp.o $(CFLAGS) $(LIBS) -Wall
+microsim_gp_debug : microsim_gp_debug.o
+	$(CC) -o microsim_gp_debug microsim_gp_debug.o $(CFLAGS) $(LIBS) -Wall
 
-microsim_gp.o : $(DEPS)  
+microsim_gp_debug.o : $(DEPS)  
 
 _HEADERS_XDMF_WRITER = global_vars.h functions.h matrix.h utility_functions.h reading_input_parameters.h
 
@@ -70,6 +70,5 @@ reconstruct.o : $(DEPS_RECONSTRUCT)
 
 clean :
 
-	rm microsim_gp.o microsim_gp reconstruct.o reconstruct write_xdmf.o write_xdmf
-
+	rm microsim_gp.o microsim_gp microsim_gp_debug.o microsim_gp_debug reconstruct.o reconstruct write_xdmf.o write_xdmf
 

@@ -336,18 +336,18 @@ void Mpiinfo(long taskid) {
     msgtype = BEGIN;
     
     MPI_Recv(workers_mpi.offset, 2, MPI_LONG, source, msgtype, MPI_COMM_WORLD, &status);
-    printf("recieved, taskid=%ld, offset_x=%ld, offset_y=%ld\n",taskid, workers_mpi.offset[X], workers_mpi.offset[Y]);
+    //printf("recieved, taskid=%ld, offset_x=%ld, offset_y=%ld\n",taskid, workers_mpi.offset[X], workers_mpi.offset[Y]);
     MPI_Recv(workers_mpi.rows, 2, MPI_LONG, source, msgtype, MPI_COMM_WORLD, &status);
-    printf("recieved, taskid=%ld, rows[X]=%ld, rows[Y]=%ld\n",taskid, workers_mpi.rows[X], workers_mpi.rows[Y]);
+    //printf("recieved, taskid=%ld, rows[X]=%ld, rows[Y]=%ld\n",taskid, workers_mpi.rows[X], workers_mpi.rows[Y]);
     MPI_Recv(&workers_mpi.left_node,  1, MPI_INT, source, msgtype, MPI_COMM_WORLD, &status);
-    printf("taskid=%ld, recieved, left=%d\n",taskid, workers_mpi.left_node);
+    //printf("taskid=%ld, recieved, left=%d\n",taskid, workers_mpi.left_node);
     MPI_Recv(&workers_mpi.right_node, 1, MPI_INT, source, msgtype, MPI_COMM_WORLD, &status);
-    printf("taskid=%ld, recieved, right=%d\n",taskid, workers_mpi.right_node);
+    //printf("taskid=%ld, recieved, right=%d\n",taskid, workers_mpi.right_node);
     
     MPI_Recv(&workers_mpi.top_node,  1, MPI_INT, source, msgtype, MPI_COMM_WORLD, &status);
-    printf("taskid=%ld, recieved, top=%d\n",taskid, workers_mpi.top_node);
+    //printf("taskid=%ld, recieved, top=%d\n",taskid, workers_mpi.top_node);
     MPI_Recv(&workers_mpi.bottom_node, 1, MPI_INT, source, msgtype, MPI_COMM_WORLD, &status);
-    printf("taskid=%ld, recieved, bottom=%d\n", taskid, workers_mpi.bottom_node);
+    //printf("taskid=%ld, recieved, bottom=%d\n", taskid, workers_mpi.bottom_node);
     
     MPI_Recv(&workers_mpi.firstx,   1, MPI_INT, source, msgtype, MPI_COMM_WORLD, &status);
     MPI_Recv(&workers_mpi.firsty,   1, MPI_INT, source, msgtype, MPI_COMM_WORLD, &status);
@@ -443,7 +443,7 @@ void Mpiinfo(long taskid) {
     
     MPI_Type_free(&MPI_gridinfo_vector);
     
-    printf("Received data, status=%d,taskid=%ld, test=%d, workers_mpi.offset_x=%ld, workers_mpi.offset_y=%ld, workers_mpi.rows[X]=%ld,workers_mpi.rows_y=%ld,index_count=%ld,workers_mpi.layer_size=%ld\n",status.MPI_ERROR,taskid, MPI_SUCCESS, workers_mpi.offset_x, workers_mpi.offset_y, workers_mpi.rows[X],workers_mpi.rows_y,index_count,workers_mpi.layer_size);
+    //printf("Received data, status=%d,taskid=%ld, test=%d, workers_mpi.offset_x=%ld, workers_mpi.offset_y=%ld, workers_mpi.rows[X]=%ld,workers_mpi.rows_y=%ld,index_count=%ld,workers_mpi.layer_size=%ld\n",status.MPI_ERROR,taskid, MPI_SUCCESS, workers_mpi.offset_x, workers_mpi.offset_y, workers_mpi.rows[X],workers_mpi.rows_y,index_count,workers_mpi.layer_size);
     
     
     if (RESTART == 0) {

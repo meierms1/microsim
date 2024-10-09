@@ -172,9 +172,6 @@ void function_F_02_getMu(double *mu, double *c, double *phi, double T, struct gr
       }
     }
     matinvnew(dcdmu,inv_dcdmu,NUMCOMPONENTS-1);
-//     inv_dcdmu[0][0] = 1.0/dcdmu[0][0];
-//     deltamu[0]      = deltac[0]*inv_dcdmu[0][0];
-//     mu[0]          += deltamu[0];
     multiply(inv_dcdmu,deltac,deltamu,NUMCOMPONENTS-1);
     vectorsum(deltamu,mu,mu,NUMCOMPONENTS-1);
     iter++;
